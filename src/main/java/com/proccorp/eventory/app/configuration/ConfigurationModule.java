@@ -1,24 +1,22 @@
 package com.proccorp.eventory.app.configuration;
 
-import com.proccorp.eventory.storage.AccountsRepository;
-import com.proccorp.eventory.transfer.TransferExecutor;
-import com.proccorp.eventory.transfer.solutions.one.TwoAccountsBlockingTransferExecutor;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.proccorp.eventory.storage.SchedulesRepository;
+import com.proccorp.eventory.storage.SchedulesRepositoryInMemory;
 
 public class ConfigurationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(TransferExecutor.class).to(TwoAccountsBlockingTransferExecutor.class); //solution one
-//        bind(TransferExecutor.class).to(AmountBlockingTransferExecutor.class); //solution two
+
     }
 
     @Provides
     @Singleton
-    public AccountsRepository createRepository() {
-        return new AccountsRepository();
+    public SchedulesRepository createRepository() {
+        return new SchedulesRepositoryInMemory();
     }
 
 }
