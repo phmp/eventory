@@ -7,10 +7,11 @@ import lombok.Data;
 
 @Data
 public class Event {
+    private String id;
     private Schedule schedule;
     private ZonedDateTime zonedDateTime;
     private List<Reservation> reservations;
     public boolean isFull(){
-        return schedule.getMaxNumberOfPeople() - reservations.size() <= 0;
+        return reservations.size() >= schedule.getMaxNumberOfPeople();
     }
 }

@@ -2,11 +2,13 @@ package com.proccorp.eventory.model;
 
 import java.time.ZonedDateTime;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
+@Getter
+@AllArgsConstructor
 public class Reservation {
-    private boolean confirmedByHost;
-    private ZonedDateTime confirmationDateTime;
-    private Person person;
+    private final boolean confirmedByHost;
+    private final ZonedDateTime confirmationDateTime;
+    private final User person;
 }
