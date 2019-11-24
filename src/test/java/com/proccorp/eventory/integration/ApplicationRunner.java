@@ -1,13 +1,12 @@
-package com.proccorp.eventory.integration.tests;
+package com.proccorp.eventory.integration;
 
 import com.proccorp.eventory.app.Application;
-
 import io.restassured.RestAssured;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import spark.Spark;
 
-public class AccountsApplicationRunner {
+public class ApplicationRunner {
 
     @BeforeClass
     public void startApp() {
@@ -17,7 +16,7 @@ public class AccountsApplicationRunner {
 
     @BeforeSuite
     public void initConfiguration() {
-        RestAssured.baseURI = "http://localhost:4567/";
+        RestAssured.baseURI = "http://localhost:4567";
     }
 
 }
