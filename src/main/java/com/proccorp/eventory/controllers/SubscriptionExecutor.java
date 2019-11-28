@@ -17,11 +17,12 @@ public class SubscriptionExecutor {
         this.timeProvider = timeProvider;
     }
 
-    public void subscribe(Event event, User user){
+    public Reservation subscribe(Event event, User user){
         if (!event.isFull()) {
             ZonedDateTime now = timeProvider.zonedNow();
             Reservation reservation = new Reservation(false, now, user);
             event.getReservations().add(reservation);
+            return reservation;
         } else {
             throw new RuntimeException("Reservation failed. Event full.");
         }

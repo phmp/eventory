@@ -5,12 +5,12 @@ import com.proccorp.eventory.model.Event;
 import com.proccorp.eventory.model.Schedule;
 import com.proccorp.eventory.storage.SchedulesRepository;
 
-public class SchedulesController {
+public class EventFinder {
 
     private SchedulesRepository repository;
 
     @Inject
-    public SchedulesController(SchedulesRepository repository) {
+    public EventFinder(SchedulesRepository repository) {
         this.repository = repository;
     }
 

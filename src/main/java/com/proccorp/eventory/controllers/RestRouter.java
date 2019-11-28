@@ -17,19 +17,21 @@ public class RestRouter {
 
     private Gson gson = new Gson();
     private final SchedulesRepository schedulesRepository;
-    private final SchedulesController schedulesController;
+    private final EventFinder eventFinder;
+    private final SubscriptionController subscriptionController;
 
     @Inject
     public RestRouter(SchedulesRepository schedulesRepository,
-            SchedulesController schedulesController) {
+                      EventFinder eventFinder, SubscriptionController subscriptionController) {
         this.schedulesRepository = schedulesRepository;
-        this.schedulesController = schedulesController;
+        this.eventFinder = eventFinder;
+        this.subscriptionController = subscriptionController;
     }
 
     public Event event(Request request, Response response) {
         String scheduleId = request.params("scheduleId");
         String eventId = request.params("eventId");
-        return schedulesController.getCurrent(scheduleId);
+        return schedulesRepository.get(scheduleId).getEvent(eventId);
     }
 
     public List<Schedule> schedules(Request request, Response response) {
@@ -39,8 +41,9 @@ public class RestRouter {
     public Reservation addMe(Request request, Response response) {
         String body = request.body();
         SubscriptionRequest subscriptionRequest = gson.fromJson(body, SubscriptionRequest.class);
+        Reservation reservation = subscriptionController.addPerson(subscriptionRequest);
 
-        return null;
+        return reservation;
     }
 
     //    public Collection<Account> listAccountRoute(Request req, Response res) {
