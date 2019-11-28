@@ -21,7 +21,16 @@ public class RestController {
         get("/schedules", router::schedules);
         get("/schedules/", router::schedules);
         get("/schedules/:scheduleId/events/:eventId/", router::event);
-        post("/schedules/:scheduleId/events/:eventId/addMe", router::addMe);
+        post("/schedules/:scheduleId/events/:eventId/reservations/", router::createReservation);
+
+        put("/schedules/:scheduleId/events/:eventId/reservations/:reservationId", router::confirm); // framework do security
+
+        // sql lite
+        // DDL -
+        // migracja od dnia zero
+        // framework ktory robi migracje
+        // https://letsencrypt.org/
+
     }
 
 
