@@ -24,4 +24,9 @@ public class RepositoryInMemory<T> implements Repository<T> {
     @Override public void replace(String id, T element) {
         elements.replace(id, element);
     }
+
+    @Override public T add(T element) {
+        return getAll().get(0);
+    }
+
 }

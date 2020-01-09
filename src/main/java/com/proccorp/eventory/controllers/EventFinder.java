@@ -1,22 +1,31 @@
 package com.proccorp.eventory.controllers;
 
-import com.google.inject.Inject;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.proccorp.eventory.model.Event;
 import com.proccorp.eventory.model.Schedule;
 import com.proccorp.eventory.storage.SchedulesRepository;
 
+@Service
 public class EventFinder {
 
-    private SchedulesRepository repository;
+    private final SchedulesRepository repository;
+    private final CurrentEventSelector eventSelector;
 
-    @Inject
-    public EventFinder(SchedulesRepository repository) {
+    @Autowired
+    public EventFinder(SchedulesRepository repository,
+            CurrentEventSelector eventSelector) {
         this.repository = repository;
+        this.eventSelector = eventSelector;
     }
 
     public Event getCurrent(String scheduleId){
         Schedule schedule = repository.get(scheduleId);
-        return schedule.getEvents().stream().findFirst().orElseThrow();
+        List<Event> events = schedule.getEvents();
+        return eventSelector.getCurrent(events);
     }
 
 }
