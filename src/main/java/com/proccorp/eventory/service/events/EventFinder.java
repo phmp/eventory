@@ -1,4 +1,4 @@
-package com.proccorp.eventory.controllers;
+package com.proccorp.eventory.service.events;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class EventFinder {
         this.eventSelector = eventSelector;
     }
 
-    public Event getCurrent(String scheduleId){
+    public Event getCurrent(String scheduleId) {
         Schedule schedule = repository.get(scheduleId);
         List<Event> events = schedule.getEvents();
         return eventSelector.getCurrent(events);

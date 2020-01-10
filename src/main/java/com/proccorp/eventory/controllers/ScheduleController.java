@@ -1,24 +1,33 @@
 package com.proccorp.eventory.controllers;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proccorp.eventory.model.Event;
 import com.proccorp.eventory.model.Reservation;
 import com.proccorp.eventory.model.Schedule;
 import com.proccorp.eventory.model.User;
+import com.proccorp.eventory.service.events.EventFinder;
+import com.proccorp.eventory.service.events.ReservationService;
 import com.proccorp.eventory.storage.SchedulesRepository;
 
+@Controller
 @RestController
-@RequestMapping("/schedules")
+@RequestMapping(value = "/schedules", produces = APPLICATION_JSON_VALUE)
 public class ScheduleController {
 
     private final SchedulesRepository schedulesRepository;
@@ -33,7 +42,7 @@ public class ScheduleController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping(value = {"/", ""})
+    @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     public List<Schedule> getSchedules(){
         return schedulesRepository.getAll();
     }

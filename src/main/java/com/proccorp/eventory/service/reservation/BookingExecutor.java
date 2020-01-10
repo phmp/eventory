@@ -1,28 +1,31 @@
-package com.proccorp.eventory.controllers;
+package com.proccorp.eventory.service.reservation;
 
 import java.time.ZonedDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.proccorp.eventory.date.TimeProvider;
 import com.proccorp.eventory.model.Event;
 import com.proccorp.eventory.model.Reservation;
 import com.proccorp.eventory.model.User;
 
-public class SubscriptionExecutor {
+public class BookingExecutor {
 
     private final TimeProvider timeProvider;
 
-    public SubscriptionExecutor(TimeProvider timeProvider) {
+    @Autowired
+    public BookingExecutor(TimeProvider timeProvider) {
         this.timeProvider = timeProvider;
     }
 
-    public Reservation subscribe(Event event, User user){
-        if (!event.isFull()) {
+    public Reservation book(Event event, User user){
+        if (event.isFull()) {
+            throw new RuntimeException("Reservation failed. Event full.");
+        } else {
             ZonedDateTime now = timeProvider.zonedNow();
             Reservation reservation = new Reservation("",false, now, user);
             event.getReservations().add(reservation);
             return reservation;
-        } else {
-            throw new RuntimeException("Reservation failed. Event full.");
         }
     }
 

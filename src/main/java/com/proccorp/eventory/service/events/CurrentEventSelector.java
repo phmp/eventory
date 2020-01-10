@@ -1,8 +1,9 @@
-package com.proccorp.eventory.controllers;
+package com.proccorp.eventory.service.events;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proccorp.eventory.date.SimpleTimeProvider;
@@ -12,6 +13,7 @@ import com.proccorp.eventory.model.Event;
 public class CurrentEventSelector {
     private final SimpleTimeProvider timeProvider;
 
+    @Autowired
     public CurrentEventSelector(SimpleTimeProvider timeProvider) {
         this.timeProvider = timeProvider;
     }
