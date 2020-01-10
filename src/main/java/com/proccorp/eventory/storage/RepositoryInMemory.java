@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class RepositoryInMemory<T> implements Repository<T> {
+import com.proccorp.eventory.model.IndexedObject;
+
+public class RepositoryInMemory<T extends IndexedObject> implements Repository<T> {
     private Map<String, T> elements = new HashMap<>();
 
     @Override public List<T> getAll() {
@@ -26,7 +28,8 @@ public class RepositoryInMemory<T> implements Repository<T> {
     }
 
     @Override public T add(T element) {
-        return getAll().get(0);
+        elements.putIfAbsent(element.getId(), element);
+        return element;
     }
 
 }

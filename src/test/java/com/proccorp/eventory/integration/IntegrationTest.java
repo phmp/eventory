@@ -1,19 +1,27 @@
 package com.proccorp.eventory.integration;
 
-import org.testng.annotations.Test;
-
 import static io.restassured.RestAssured.when;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 
-public class IntegrationTest extends ApplicationRunner {
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import io.restassured.RestAssured;
+
+public class IntegrationTest{
+
+    @BeforeAll
+    public static void initConfiguration() {
+    }
 
     @Test
     public void actuator(){
         when()
-                .get("/actuator")
+                .get("http://localhost:8080"+"/actuator")
         .then()
                 .statusCode(200)
-                .body(is("alive!"));
+                .body(contains("alive!"));
     }
 
 
@@ -21,7 +29,7 @@ public class IntegrationTest extends ApplicationRunner {
     public void listSchedules(){
 
         when()
-                .get("/schedules")
+                .get("http://localhost:8080"+"/schedules")
                 .then()
                 .statusCode(200);
     }
@@ -30,7 +38,7 @@ public class IntegrationTest extends ApplicationRunner {
     public void listEvents(){
 
         when()
-                .get("/schedules/1/events")
+                .get("http://localhost:8080"+"/schedules/1/events")
                 .then()
                 .statusCode(200);
     }
