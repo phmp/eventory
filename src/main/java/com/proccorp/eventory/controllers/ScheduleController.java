@@ -25,9 +25,8 @@ import com.proccorp.eventory.service.events.EventFinder;
 import com.proccorp.eventory.service.events.ReservationService;
 import com.proccorp.eventory.storage.SchedulesRepository;
 
-@Controller
 @RestController
-@RequestMapping(value = "/schedules", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/schedules", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
 public class ScheduleController {
 
     private final SchedulesRepository schedulesRepository;
@@ -42,7 +41,7 @@ public class ScheduleController {
         this.reservationService = reservationService;
     }
 
-    @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
+    @GetMapping
     public List<Schedule> getSchedules(){
         return schedulesRepository.getAll();
     }
@@ -52,7 +51,7 @@ public class ScheduleController {
         return schedulesRepository.get(id);
     }
 
-    @PostMapping("/")
+    @PostMapping
     public Schedule createSchedule(@RequestBody Schedule body){
         return schedulesRepository.add(body);
     }
