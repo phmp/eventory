@@ -1,9 +1,9 @@
-package com.proccorp.eventory.app;
+package com.proccorp.eventory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.proccorp")
+@SpringBootApplication
 public class Application {
 
     public static void main(String... args) {

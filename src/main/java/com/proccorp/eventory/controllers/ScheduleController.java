@@ -26,7 +26,7 @@ import com.proccorp.eventory.service.events.ReservationService;
 import com.proccorp.eventory.storage.SchedulesRepository;
 
 @RestController
-@RequestMapping(value = "/schedules", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/schedules")
 public class ScheduleController {
 
     private final SchedulesRepository schedulesRepository;

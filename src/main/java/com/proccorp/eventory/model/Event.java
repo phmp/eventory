@@ -7,7 +7,6 @@ import lombok.Data;
 
 @Data
 public class Event extends IndexedObject implements Comparable<Event>{
-    private String id;
     private Schedule schedule;
     private ZonedDateTime zonedDateTime;
     private List<Reservation> reservations;

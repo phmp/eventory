@@ -26,4 +26,15 @@ public class Schedule extends IndexedObject{
         return events.stream().filter(event -> Objects.equals(eventId, event.getId()))
                 .findFirst().orElseThrow();
     }
+
+    @Override public String toString() {
+        return "Schedule{" +
+                "events=" + events +
+                ", maxNumberOfPeople=" + maxNumberOfPeople +
+                ", host=" + host +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
