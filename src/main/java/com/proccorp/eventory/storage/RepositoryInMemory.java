@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import com.proccorp.eventory.model.IndexedObject;
+import com.proccorp.eventory.model.internal.IndexedObject;
 
 public class RepositoryInMemory<T extends IndexedObject> implements Repository<T> {
     private Map<String, T> elements = new HashMap<>();

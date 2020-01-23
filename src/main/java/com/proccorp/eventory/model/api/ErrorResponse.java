@@ -1,4 +1,4 @@
-package com.proccorp.eventory.model;
+package com.proccorp.eventory.model.api;
 
 public class ErrorResponse {
 

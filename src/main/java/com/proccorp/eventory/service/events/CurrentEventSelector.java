@@ -7,13 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proccorp.eventory.date.SimpleTimeProvider;
-import com.proccorp.eventory.model.Event;
+import com.proccorp.eventory.model.internal.Event;
 
 @Service
 public class CurrentEventSelector {
     private final SimpleTimeProvider timeProvider;
 
-    @Autowired
     public CurrentEventSelector(SimpleTimeProvider timeProvider) {
         this.timeProvider = timeProvider;
     }

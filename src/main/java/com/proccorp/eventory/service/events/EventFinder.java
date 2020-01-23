@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proccorp.eventory.model.Event;
-import com.proccorp.eventory.model.Schedule;
-import com.proccorp.eventory.storage.SchedulesRepository;
+import com.proccorp.eventory.model.internal.Event;
+import com.proccorp.eventory.model.internal.Schedule;
+import com.proccorp.eventory.storage.schedule.SchedulesRepository;
 
 @Service
 public class EventFinder {

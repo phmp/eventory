@@ -2,21 +2,19 @@ package com.proccorp.eventory.service.reservation;
 
 import java.time.ZonedDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.proccorp.eventory.date.TimeProvider;
-import com.proccorp.eventory.model.Event;
-import com.proccorp.eventory.model.Reservation;
-import com.proccorp.eventory.model.User;
+import com.proccorp.eventory.date.SimpleTimeProvider;
+import com.proccorp.eventory.model.internal.Event;
+import com.proccorp.eventory.model.internal.Reservation;
+import com.proccorp.eventory.model.internal.User;
 
 @Component
 public class BookingExecutor {
 
-    private final TimeProvider timeProvider;
+    private final SimpleTimeProvider timeProvider;
 
-    @Autowired
-    public BookingExecutor(TimeProvider timeProvider) {
+    public BookingExecutor(SimpleTimeProvider timeProvider) {
         this.timeProvider = timeProvider;
     }
 

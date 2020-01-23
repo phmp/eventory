@@ -1,12 +1,11 @@
-package com.proccorp.eventory.model;
+package com.proccorp.eventory.model.internal;
 
 import java.time.ZonedDateTime;
-import java.util.UUID;
 
 import lombok.Getter;
 
 @Getter
-public class Reservation extends IndexedObject{
+public class Reservation extends IndexedObject {
     private final String additionalNotes;
     private final boolean confirmedByHost;
     private final ZonedDateTime subscriptionDateTime;

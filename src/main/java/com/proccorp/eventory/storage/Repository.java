@@ -2,7 +2,7 @@ package com.proccorp.eventory.storage;
 
 import java.util.List;
 
-import com.proccorp.eventory.model.IndexedObject;
+import com.proccorp.eventory.model.internal.IndexedObject;
 
 public interface Repository<T extends IndexedObject> {
     List<T> getAll();
