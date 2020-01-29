@@ -5,13 +5,16 @@ import com.proccorp.eventory.model.internal.User;
 
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class ScheduleView {
 
-    private String id;
-    private List<EventView> events;
-    private int maxNumberOfPeople;
-    private User host;
-    private String location;
-    private String description;
+    private final String id;
+    private final List<EventView> events;
+    private final int maxNumberOfPeople;
+    private final User host;
+    private final String location;
+    private final String description;
 
 }

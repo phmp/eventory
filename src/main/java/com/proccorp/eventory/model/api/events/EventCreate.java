@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class EventCreate {
-    private String zonedDateTime;
+    private final String zonedDateTime;
 }

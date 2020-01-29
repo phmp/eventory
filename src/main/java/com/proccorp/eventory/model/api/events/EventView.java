@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class EventView {
-    private String id;
-    private String zonedDateTime;
-    private List<Reservation> reservations;
+    private final String id;
+    private final String zonedDateTime;
+    private final List<Reservation> reservations;
 }
