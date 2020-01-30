@@ -1,5 +1,6 @@
 package com.proccorp.eventory.model.api.events;
 
+import com.proccorp.eventory.model.api.reservation.ReservationView;
 import com.proccorp.eventory.model.internal.Reservation;
 import lombok.Data;
 
@@ -9,5 +10,5 @@ import java.util.List;
 public class EventView {
     private final String id;
     private final String zonedDateTime;
-    private final List<Reservation> reservations;
+    private final List<ReservationView> reservations;
 }

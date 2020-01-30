@@ -41,7 +41,7 @@ public class UserRepositoryInDataBase implements UserRepository{
     }
 
     @Override public User add(User element) {
-        UserEntity userEntity = findByExternalId(element.getId());
+        UserEntity userEntity = new UserEntity();
         userEntity.updateWith(element);
         return jpaRepository.save(userEntity).buildInternalObject();
     }

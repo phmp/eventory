@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proccorp.eventory.model.ScheduleMapper;
+import com.proccorp.eventory.model.api.schedules.ScheduleCreate;
+import com.proccorp.eventory.model.api.schedules.ScheduleView;
 import com.proccorp.eventory.model.internal.Event;
 import com.proccorp.eventory.model.internal.Reservation;
 import com.proccorp.eventory.model.internal.Schedule;
@@ -18,6 +21,7 @@ import com.proccorp.eventory.model.internal.User;
 import com.proccorp.eventory.service.events.EventFinder;
 import com.proccorp.eventory.service.events.ReservationService;
 import com.proccorp.eventory.storage.schedule.SchedulesRepository;
+import com.proccorp.eventory.storage.user.UserRepository;
 
 @RestController
 @RequestMapping(value = "/schedules")
@@ -26,13 +30,18 @@ public class ScheduleController {
     private final SchedulesRepository schedulesRepository;
     private final EventFinder eventFinder;
     private final ReservationService reservationService;
+    private final ScheduleMapper scheduleMapper;
+    private final UserRepository userRepository;
 
     @Autowired
     public ScheduleController(SchedulesRepository schedulesRepository,
-            EventFinder eventFinder, ReservationService reservationService) {
+            EventFinder eventFinder, ReservationService reservationService,
+            ScheduleMapper scheduleMapper, UserRepository userRepository) {
         this.schedulesRepository = schedulesRepository;
         this.eventFinder = eventFinder;
         this.reservationService = reservationService;
+        this.scheduleMapper = scheduleMapper;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -46,8 +55,11 @@ public class ScheduleController {
     }
 
     @PostMapping
-    public Schedule createSchedule(@RequestBody Schedule body){
-        return schedulesRepository.add(body);
+    public ScheduleView createSchedule(@RequestBody ScheduleCreate body){
+        User host = userRepository.get(body.getHostId());
+        Schedule schedule = scheduleMapper.toInternal(body, host);
+        Schedule addedSchedule = schedulesRepository.add(schedule);
+        return scheduleMapper.toView(addedSchedule);
     }
 
     @PutMapping("/{id}")

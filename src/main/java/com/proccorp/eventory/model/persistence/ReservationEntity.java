@@ -33,6 +33,6 @@ public class ReservationEntity {
     private EventEntity event;
 
     public Reservation toInternal() {
-        return new Reservation(reservationId, additionalNotes, status, null, user.toInternal() );
+        return new Reservation(reservationId, additionalNotes, status, null, user.toInternal(), event.toInternal());
     }
 }

@@ -23,7 +23,7 @@ public class BookingExecutor {
             throw new RuntimeException("Reservation failed. Event full.");
         } else {
             ZonedDateTime now = timeProvider.zonedNow();
-            Reservation reservation = new Reservation("","created", now, user);
+            Reservation reservation = new Reservation("","created", now, user, event);
             event.getReservations().add(reservation);
             return reservation;
         }

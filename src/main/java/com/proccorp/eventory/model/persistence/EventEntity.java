@@ -25,7 +25,7 @@ public class EventEntity {
     @JoinColumn(name = "schedule_id", nullable = false)
     private ScheduleEntity schedule;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ReservationEntity> reservations;
 
     public Event toInternal() {

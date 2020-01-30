@@ -1,6 +1,6 @@
 package com.proccorp.eventory.model.api.schedules;
 
-import com.proccorp.eventory.model.api.users.UserRaw;
+import com.proccorp.eventory.model.api.users.UserCreate;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
 public class ScheduleCreate {
 
     private final int maxNumberOfPeople;
-    private final UserRaw host;
+    private final String hostId;
     private final String location;
     private final String description;
 

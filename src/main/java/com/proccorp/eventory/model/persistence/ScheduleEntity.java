@@ -2,6 +2,7 @@ package com.proccorp.eventory.model.persistence;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class ScheduleEntity {
     private UserEntity host;
 
     @OneToMany(mappedBy = "schedule", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<EventEntity> events;
+    private List<EventEntity> events = new ArrayList<>();
 
     public ScheduleEntity() {
     }
@@ -72,4 +73,7 @@ public class ScheduleEntity {
         maxNumberOfPeople = element.getMaxNumberOfPeople();
     }
 
+    public void setHost(UserEntity host) {
+        this.host = host;
+    }
 }

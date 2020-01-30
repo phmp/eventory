@@ -7,50 +7,54 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.proccorp.eventory.model.internal.Schedule;
+import com.proccorp.eventory.model.internal.User;
 import com.proccorp.eventory.model.persistence.ScheduleEntity;
+import com.proccorp.eventory.model.persistence.UserEntity;
 import com.proccorp.eventory.storage.jpa.ScheduleJpaRepository;
+import com.proccorp.eventory.storage.jpa.UserJpaRepository;
 
 @Component
 @Profile("db")
 public class SchedulesRepositoryInDataBase implements SchedulesRepository {
 
-    ScheduleJpaRepository jpaRepository;
+    private ScheduleJpaRepository scheduleJpaRepository;
+    private UserJpaRepository userJpaRepository;
 
-    public SchedulesRepositoryInDataBase(ScheduleJpaRepository jpaRepository) {
-        this.jpaRepository = jpaRepository;
+    public SchedulesRepositoryInDataBase(ScheduleJpaRepository scheduleJpaRepository,
+            UserJpaRepository userJpaRepository) {
+        this.scheduleJpaRepository = scheduleJpaRepository;
+        this.userJpaRepository = userJpaRepository;
     }
 
     @Override public List<Schedule> getAll() {
-        return jpaRepository.findAll().stream()
+        return scheduleJpaRepository.findAll().stream()
                 .map(ScheduleEntity::toInternal)
                 .collect(Collectors.toList());
     }
 
     @Override public Schedule get(String id) {
-        return findByExternalId(id)
+        return scheduleJpaRepository.findByScheduleId(id)
                 .toInternal();
     }
 
     @Override public void delete(String id) {
-        jpaRepository.delete(findByExternalId(id));
+        ScheduleEntity byScheduleId = scheduleJpaRepository.findByScheduleId(id);
+        scheduleJpaRepository.delete(byScheduleId);
     }
 
     @Override public void replace(String id, Schedule element) {
-        ScheduleEntity scheduleEntity = findByExternalId(id);
+        ScheduleEntity scheduleEntity = scheduleJpaRepository.findByScheduleId(id);
         scheduleEntity.updateWith(element);
-        jpaRepository.save(scheduleEntity);
+        scheduleJpaRepository.save(scheduleEntity);
     }
 
     @Override public Schedule add(Schedule element) {
         ScheduleEntity scheduleEntity = new ScheduleEntity();
+        User host = element.getHost();
+        UserEntity firstByUserId = userJpaRepository.findFirstByUserId(host.getId());
         scheduleEntity.updateWith(element);
-        return jpaRepository.save(scheduleEntity).toInternal();
+        scheduleEntity.setHost(firstByUserId);
+        return scheduleJpaRepository.save(scheduleEntity).toInternal();
     }
 
-    private ScheduleEntity findByExternalId(String id) {
-        return jpaRepository.findAll().stream()
-                .filter(scheduleEntity -> id.equals(scheduleEntity.getScheduleId()))
-                .findFirst()
-                .orElse(null);
-    }
 }

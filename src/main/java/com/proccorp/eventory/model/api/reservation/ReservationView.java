@@ -10,5 +10,5 @@ public class ReservationView {
     private final String id;
     private final String status;
     private final UserView user;
-    private final EventView event;
+    private final String eventId;
 }
