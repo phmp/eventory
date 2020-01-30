@@ -75,4 +75,8 @@ public class UserEntity {
         phoneNumber= element.getPhoneNumber();
         notes= element.getNotes();
     }
+
+    public User toInternal() {
+        return new User(userId, name, phoneNumber, notes);
+    }
 }

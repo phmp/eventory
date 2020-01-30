@@ -1,11 +1,8 @@
 package com.proccorp.eventory.model.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.proccorp.eventory.model.internal.Reservation;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "reservations")
@@ -22,12 +19,20 @@ public class ReservationEntity {
     private String additionalNotes;
 
     @Column
-    private boolean confirmedByHost;
+    private String status;
 
     @Column
     private String subscriptionDateTime;
 
-    @Column
-    private String userPrimaryKey;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "event_id", nullable = false)
+    private EventEntity event;
+
+    public Reservation toInternal() {
+        return new Reservation(reservationId, additionalNotes, status, null, user.toInternal() );
+    }
 }

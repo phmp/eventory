@@ -1,13 +1,9 @@
 package com.proccorp.eventory.model.persistence;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.proccorp.eventory.model.internal.Event;
 import com.proccorp.eventory.model.internal.Schedule;
@@ -28,18 +24,26 @@ public class ScheduleEntity {
     private int maxNumberOfPeople;
 
     @Column
-    private String hostPrimaryKey;
-
-    @Column
     private String location;
 
     @Column
     private String description;
 
-    public Schedule buildInternalObject() {
-        User host = new User("", hostPrimaryKey, "", "");
-        List<Event> events = null;
-        return new Schedule(scheduleId, events, maxNumberOfPeople, host, location, description);
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "host_user_id", nullable = false)
+    private UserEntity host;
+
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<EventEntity> events;
+
+    public ScheduleEntity() {
+    }
+
+    public Schedule toInternal() {
+        List<Event> events = this.events.stream()
+                .map(EventEntity::toInternal)
+                .collect(Collectors.toList());
+        return new Schedule(scheduleId, events, maxNumberOfPeople, host.toInternal(), location, description);
     }
 
     public String getScheduleId() {
@@ -52,10 +56,6 @@ public class ScheduleEntity {
 
     public int getMaxNumberOfPeople() {
         return maxNumberOfPeople;
-    }
-
-    public String getHostPrimaryKey() {
-        return hostPrimaryKey;
     }
 
     public String getLocation() {
@@ -71,4 +71,5 @@ public class ScheduleEntity {
         location = element.getLocation();
         maxNumberOfPeople = element.getMaxNumberOfPeople();
     }
+
 }

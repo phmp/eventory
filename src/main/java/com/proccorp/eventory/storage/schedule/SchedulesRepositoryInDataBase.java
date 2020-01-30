@@ -4,13 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import com.proccorp.eventory.model.internal.Schedule;
 import com.proccorp.eventory.model.persistence.ScheduleEntity;
-import com.proccorp.eventory.storage.RepositoryInMemory;
 import com.proccorp.eventory.storage.jpa.ScheduleJpaRepository;
 
 @Component
@@ -25,13 +22,13 @@ public class SchedulesRepositoryInDataBase implements SchedulesRepository {
 
     @Override public List<Schedule> getAll() {
         return jpaRepository.findAll().stream()
-                .map(ScheduleEntity::buildInternalObject)
+                .map(ScheduleEntity::toInternal)
                 .collect(Collectors.toList());
     }
 
     @Override public Schedule get(String id) {
         return findByExternalId(id)
-                .buildInternalObject();
+                .toInternal();
     }
 
     @Override public void delete(String id) {
@@ -47,7 +44,7 @@ public class SchedulesRepositoryInDataBase implements SchedulesRepository {
     @Override public Schedule add(Schedule element) {
         ScheduleEntity scheduleEntity = new ScheduleEntity();
         scheduleEntity.updateWith(element);
-        return jpaRepository.save(scheduleEntity).buildInternalObject();
+        return jpaRepository.save(scheduleEntity).toInternal();
     }
 
     private ScheduleEntity findByExternalId(String id) {
