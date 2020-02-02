@@ -68,6 +68,7 @@ public class ScheduleEntity {
     }
 
     public void updateWith(Schedule element) {
+        scheduleId = element.getId();
         description = element.getDescription();
         location = element.getLocation();
         maxNumberOfPeople = element.getMaxNumberOfPeople();

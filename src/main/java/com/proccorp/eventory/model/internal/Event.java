@@ -12,8 +12,12 @@ public class Event extends IndexedObject implements Comparable<Event>{
     private ZonedDateTime zonedDateTime;
     private List<Reservation> reservations;
 
-    public Event() {
+    public Event(Schedule schedule, ZonedDateTime zonedDateTime,
+            List<Reservation> reservations) {
         super();
+        this.schedule = schedule;
+        this.zonedDateTime = zonedDateTime;
+        this.reservations = reservations;
     }
 
     public Event(String id, Schedule schedule, ZonedDateTime zonedDateTime,

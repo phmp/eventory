@@ -2,7 +2,11 @@ package com.proccorp.eventory.model;
 
 import static java.util.stream.Collectors.toList;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -27,7 +31,12 @@ public class ScheduleMapper {
     }
 
     public ScheduleView toView(Schedule schedule){
-        List<EventView> eventViews = schedule.getEvents().stream().map(eventMapper::toView).collect(toList());
+        List<EventView> eventViews = Optional.ofNullable(schedule)
+                .map(Schedule::getEvents)
+                .orElse(new ArrayList<>())
+                .stream()
+                .map(eventMapper::toView)
+                .collect(toList());
         return new ScheduleView(schedule.getId(),
                 eventViews,
                 schedule.getMaxNumberOfPeople(),

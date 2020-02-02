@@ -68,25 +68,4 @@ public class ScheduleController {
         return schedulesRepository.get(id);
     }
 
-    @GetMapping("/{scheduleId}/events/{eventId}")
-    public Event getEvent(String scheduleId, String eventId){
-        return schedulesRepository.get(scheduleId).getEvent(eventId);
-    }
-
-    @GetMapping("/{scheduleId}/events/current")
-    public Event getCurrentEvent(String scheduleId){
-        return eventFinder.getCurrent(scheduleId);
-    }
-
-    @PostMapping("/{scheduleId}/events/{eventId}/reservations")
-    public List<Reservation> createReservation(String scheduleId, String eventId, @RequestBody User user){
-        reservationService.addPerson(scheduleId, eventId, user);
-        return getEvent(scheduleId, eventId).getReservations();
-    }
-
-        // sql lite
-        // DDL -
-        // migracja od dnia zero
-        // framework ktory robi migracje
-        // https://letsencrypt.org/
 }
