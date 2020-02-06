@@ -1,7 +1,5 @@
 package com.proccorp.eventory.controllers;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +12,9 @@ import com.proccorp.eventory.model.EventMapper;
 import com.proccorp.eventory.model.api.events.EventCreate;
 import com.proccorp.eventory.model.api.events.EventView;
 import com.proccorp.eventory.model.api.reservation.ReservationView;
+import com.proccorp.eventory.model.api.users.UserView;
 import com.proccorp.eventory.model.internal.Event;
-import com.proccorp.eventory.model.internal.Reservation;
 import com.proccorp.eventory.model.internal.Schedule;
-import com.proccorp.eventory.model.internal.User;
 import com.proccorp.eventory.service.events.EventFinder;
 import com.proccorp.eventory.service.events.ReservationService;
 import com.proccorp.eventory.storage.schedule.SchedulesRepository;
@@ -64,7 +61,8 @@ public class EventController {
 
 //
 //    @PostMapping("/reservations")
-//    public List<ReservationView> createReservation(@PathVariable String scheduleId, String eventId, @RequestBody User user){
+//    public ReservationView createReservation(@PathVariable String scheduleId, String eventId, @RequestBody UserView user){
+//
 //        reservationService.addPerson(scheduleId, eventId, user);
 //        List<Reservation> reservations = getEvent(scheduleId, eventId).getReservations();
 //        return reservations.stream().map(reservation -> reservationMapper.toView(reservation));
