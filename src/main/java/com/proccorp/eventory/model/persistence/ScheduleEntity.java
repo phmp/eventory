@@ -74,6 +74,13 @@ public class ScheduleEntity {
         maxNumberOfPeople = element.getMaxNumberOfPeople();
     }
 
+    public UserEntity getHost() {
+        return host;
+    }
+
+    public List<EventEntity> getEvents() {
+        return events;
+    }
     public void setHost(UserEntity host) {
         this.host = host;
     }

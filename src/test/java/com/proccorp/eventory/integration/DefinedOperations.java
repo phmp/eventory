@@ -15,6 +15,7 @@ import com.proccorp.eventory.model.api.schedules.ScheduleView;
 import com.proccorp.eventory.model.api.users.UserCreate;
 import com.proccorp.eventory.model.api.users.UserView;
 
+import com.proccorp.eventory.model.internal.Schedule;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ public class DefinedOperations {
 
     protected UserView createUser(UserCreate userCreate) {
         String json = GSON.toJson(userCreate);
+        log.info("User to be added:\n"+ json);
         Response response = given()
                 .contentType(ContentType.JSON)
                 .body(json)
@@ -52,13 +54,14 @@ public class DefinedOperations {
         return List.copyOf(Arrays.asList(scheduleViews));
     }
 
-    protected void viewSchedue(String scheduleId) {
+    protected ScheduleView viewSchedule(String scheduleId) {
         String path = "http://localhost:8080" + "/schedules/" + scheduleId;
         log.info(path);
-        Response response2 = when()
+        Response response = when()
                 .get(path);
-        String scheduleView = response2.prettyPrint();
+        String scheduleView = response.prettyPrint();
         log.info("retrieved schedule: " + scheduleView);
+        return response.as(ScheduleView.class);
     }
 
     protected ScheduleView createSchedule(UserView user) {
@@ -106,6 +109,16 @@ public class DefinedOperations {
                 .when()
                 .post("http://localhost:8080" + "/schedules/" + scheduleId + "/events");
         log.info("event adding response: " + response.getBody().prettyPrint());
+        return response.as(EventView.class);
+    }
+
+
+    protected EventView getEvent(String scheduleId, String eventId) {
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("http://localhost:8080" + "/schedules/" + scheduleId + "/events/" + eventId);
+        log.info("get event:\n"+response.getBody().asString());
         return response.as(EventView.class);
     }
 }

@@ -38,15 +38,16 @@ public class EventController {
     }
 
     @GetMapping("/{eventId}")
-    public Event getEvent(@PathVariable String scheduleId, String eventId){
-        return schedulesRepository.get(scheduleId).getEvent(eventId);
+    public EventView getEvent(@PathVariable String scheduleId,@PathVariable String eventId){
+        Schedule schedule = schedulesRepository.get(scheduleId);
+        Event event = schedule.getEvent(eventId);
+        return eventMapper.toView(event);
     }
 
     @GetMapping("/current")
     public EventView getCurrentEvent(@PathVariable String scheduleId){
         Event current = eventFinder.getCurrent(scheduleId);
-        EventView eventView = eventMapper.toView(current);
-        return eventView;
+        return eventMapper.toView(current);
     }
 
     @PostMapping("")

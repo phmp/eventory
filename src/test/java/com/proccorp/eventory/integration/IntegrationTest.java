@@ -1,6 +1,5 @@
 package com.proccorp.eventory.integration;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Order;
@@ -20,8 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {
-        Application.class }, properties = "server.port=8080", webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@SpringBootTest(classes = {Application.class}, properties = "server.port=8080", webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class IntegrationTest extends DefinedOperations {
 
 
@@ -55,7 +53,7 @@ public class IntegrationTest extends DefinedOperations {
         UserCreate krzysiek = new UserCreate("Krzysiek", "123-987-789", "pisac sms, nie dzwonic :)");
         UserView user = createUser(krzysiek);
         ScheduleView schedule = createSchedule(user);
-        viewSchedue(schedule.getId());
+        viewSchedule(schedule.getId());
     }
 
     @Test
@@ -66,7 +64,7 @@ public class IntegrationTest extends DefinedOperations {
     }
 
     @Test
-    public void createEventTest(){
+    public void createEventTest() {
         addSchedule();
         List<ScheduleView> scheduleViews = listAllSchedules();
         ScheduleView scheduleView = scheduleViews.stream().findFirst().orElseThrow();
@@ -75,7 +73,8 @@ public class IntegrationTest extends DefinedOperations {
         String zonedDateTime = "2018-09-16T08:00:00+00:00[Europe/London]";
         EventCreate eventCreate = new EventCreate(zonedDateTime);
         EventView eventView = createEvent(scheduleViewId, eventCreate);
-        viewSchedue(scheduleViewId);
+        getEvent(scheduleViewId, eventView.getId());
+        viewSchedule(scheduleViewId);
     }
 
 }

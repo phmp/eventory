@@ -1,6 +1,7 @@
 package com.proccorp.eventory.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,13 +46,16 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public List<Schedule> getSchedules(){
-        return schedulesRepository.getAll();
+    public List<ScheduleView> getSchedules(){
+        return schedulesRepository.getAll().stream()
+                .map(scheduleMapper::toView)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Schedule getSchedule(@PathVariable String id){
-        return schedulesRepository.get(id);
+    public ScheduleView getSchedule(@PathVariable String id){
+        Schedule schedule = schedulesRepository.get(id);
+        return scheduleMapper.toView(schedule);
     }
 
     @PostMapping
@@ -63,9 +67,10 @@ public class ScheduleController {
     }
 
     @PutMapping("/{id}")
-    public Schedule updateSchedule(@PathVariable String id, @RequestBody Schedule body){
+    public ScheduleView updateSchedule(@PathVariable String id, @RequestBody Schedule body){
         schedulesRepository.replace(id, body);
-        return schedulesRepository.get(id);
+        Schedule schedule = schedulesRepository.get(id);
+        return scheduleMapper.toView(schedule);
     }
 
 }
