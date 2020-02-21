@@ -15,7 +15,6 @@ import com.proccorp.eventory.model.api.schedules.ScheduleView;
 import com.proccorp.eventory.model.api.users.UserCreate;
 import com.proccorp.eventory.model.api.users.UserView;
 
-import com.proccorp.eventory.model.internal.Schedule;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefinedOperations {
     protected static final Gson GSON = new Gson();
+//    private static final String HOST = "http://localhost:8080";
+    private static final String HOST = "http://eventory.proccorp.pl:8080";
 
     protected UserView createUser(UserCreate userCreate) {
         String json = GSON.toJson(userCreate);
@@ -31,13 +32,13 @@ public class DefinedOperations {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("http://localhost:8080" + "/users");
+                .post(HOST + "/users");
         log.info("user added: " + response.getBody().prettyPrint());
         return response.as(UserView.class);
     }
 
     protected void viewUser(String userId) {
-        String path = "http://localhost:8080" + "/users/" + userId;
+        String path = HOST + "/users/" + userId;
         log.info(path);
         Response response1 = when()
                 .get(path);
@@ -46,7 +47,7 @@ public class DefinedOperations {
 
     protected List<ScheduleView> listAllSchedules() {
         Response response = when()
-                .get("http://localhost:8080" + "/schedules/");
+                .get(HOST + "/schedules/");
         response.then().statusCode(200);
         log.info("actual schedules: " + response.getBody().prettyPrint());
         String s = response.asString();
@@ -55,7 +56,7 @@ public class DefinedOperations {
     }
 
     protected ScheduleView viewSchedule(String scheduleId) {
-        String path = "http://localhost:8080" + "/schedules/" + scheduleId;
+        String path = HOST + "/schedules/" + scheduleId;
         log.info(path);
         Response response = when()
                 .get(path);
@@ -73,7 +74,7 @@ public class DefinedOperations {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("http://localhost:8080" + "/schedules");
+                .post(HOST + "/schedules");
 
         String bodyresponsestring = response.getBody().prettyPrint();
         log.info("returned added schedule view:\n" + bodyresponsestring);
@@ -84,7 +85,7 @@ public class DefinedOperations {
     }
 
     protected void listAllUsers() {
-        String path = "http://localhost:8080" + "/users/";
+        String path = HOST + "/users/";
         log.info(path);
         Response response1 = when()
                 .get(path);
@@ -93,7 +94,7 @@ public class DefinedOperations {
 
     protected void checkActuatorStatus() {
         given()
-                .baseUri("http://localhost:8080")
+                .baseUri(HOST)
                 .when()
                 .get("/actuator/health")
                 .then()
@@ -107,7 +108,7 @@ public class DefinedOperations {
                 .contentType(ContentType.JSON)
                 .body(json)
                 .when()
-                .post("http://localhost:8080" + "/schedules/" + scheduleId + "/events");
+                .post(HOST + "/schedules/" + scheduleId + "/events");
         log.info("event adding response: " + response.getBody().prettyPrint());
         return response.as(EventView.class);
     }
@@ -117,7 +118,7 @@ public class DefinedOperations {
         Response response = given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get("http://localhost:8080" + "/schedules/" + scheduleId + "/events/" + eventId);
+                .get(HOST + "/schedules/" + scheduleId + "/events/" + eventId);
         log.info("get event:\n"+response.getBody().asString());
         return response.as(EventView.class);
     }
