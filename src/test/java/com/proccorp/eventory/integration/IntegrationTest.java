@@ -18,10 +18,9 @@ import com.proccorp.eventory.model.api.users.UserView;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest(classes = {Application.class}, properties = "server.port=8080", webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes = {Application.class}, properties = "server.port=8080", webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class IntegrationTest extends DefinedOperations {
-
 
     @Test
     public void actuator() {

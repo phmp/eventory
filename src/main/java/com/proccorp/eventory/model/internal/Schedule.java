@@ -47,7 +47,8 @@ public class Schedule extends IndexedObject {
     public Event getEvent(String eventId) {
         return events.stream()
                 .filter(event -> Objects.equals(eventId, event.getId()))
-                .findFirst().orElseThrow();
+                .findFirst()
+                .orElseThrow();
     }
 
     @Override public String toString() {

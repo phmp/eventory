@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefinedOperations {
     protected static final Gson GSON = new Gson();
-//    private static final String HOST = "http://localhost:8080";
-    private static final String HOST = "http://eventory.proccorp.pl:8080";
+    private static final String HOST = "http://localhost:8080";
+//    private static final String HOST = "http://eventory.proccorp.pl:8080";
 
     protected UserView createUser(UserCreate userCreate) {
         String json = GSON.toJson(userCreate);
